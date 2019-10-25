@@ -1,0 +1,12 @@
+.apply{
+    width: 84px;
+    height: 28px;
+    color: #fff;
+    border-radius: 100px;
+    letter-spacing: .9px;
+    text-align: center;
+    /*line-height: 28px;*/
+    position: relative;
+    background-color: #3b99fc;
+    top: -20px;
+}

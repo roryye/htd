@@ -13,49 +13,57 @@
     <div class="row clearfix">
         <div class="col-md-12 column">
             <div class="panel panel-primary">
-                <!--<div class="panel-body">-->
-                <div class="list-group">
-                    <a href="#" class="list-group-item" style="height: 130px">
-                        <div style="margin-top: 0;padding: 0;">
-                            <div style="width: 40%;float: left;">
-                                <!--recruitTitle-->
-                                <h4 style="font-size: 20px;color: #000;">残疾人岗(广东启德教育服务有限公司)</h4>
-                                <!--lowSalary-highSalary-->
-                                <span style="font-size: 20px;color: #ff7900;">3000-4000</span> 元/月
-                            </div>
-                            <div style="position: relative;top: 15px;">
-                                <!--enterpriseName-->
-                                <h5 style="color: #000;">广东启德教育服务有限公司</h5>
-                                <div>
-                                    <!--address-->
-                                    <span style="border-right: 2px solid #999999;padding-right: 5px">广州</span>
-                                    <span style="border-right: 2px solid #999999;padding-right: 5px">大专</span>
-                                    <span>不限</span>
-                                </div>
-                            </div>
-                            <div style="float: right;">
-                                <button class="apply">申请</button>
-                            </div>
-                        </div>
-                    </a>
+                <!--<div class="list-group">-->
+                    <!--<a href="#" class="list-group-item" style="height: 130px">-->
+                        <!--<div style="margin-top: 0;padding: 0;">-->
+                            <!--<div style="width: 40%;float: left;">-->
+                                <!--&lt;!&ndash;recruitTitle&ndash;&gt;-->
+                                <!--<h4 style="font-size: 20px;color: #000;">残疾人岗(广东启德教育服务有限公司)</h4>-->
+                                <!--&lt;!&ndash;lowSalary-highSalary&ndash;&gt;-->
+                                <!--<span style="font-size: 20px;color: #ff7900;">3000-4000</span> 元/月-->
+                            <!--</div>-->
+                            <!--<div style="position: relative;top: 15px;">-->
+                                <!--&lt;!&ndash;enterpriseName&ndash;&gt;-->
+                                <!--<h5 style="color: #000;">广东启德教育服务有限公司</h5>-->
+                                <!--<div>-->
+                                    <!--&lt;!&ndash;address&ndash;&gt;-->
+                                    <!--<span style="border-right: 2px solid #999999;padding-right: 5px">广州</span>-->
+                                    <!--<span style="border-right: 2px solid #999999;padding-right: 5px">大专</span>-->
+                                    <!--<span>不限</span>-->
+                                <!--</div>-->
+                            <!--</div>-->
+                            <!--<div style="float: right;">-->
+                                <!--<button class="apply">申请</button>-->
+                            <!--</div>-->
+                        <!--</div>-->
+                    <!--</a>-->
+                <!--</div>-->
+                <div class="page-head">
+                    <p>6666666666</p>
                 </div>
-                <div class="list-group" th:each="recruit:${recruitPage}">
-                    <a href="#" class="list-group-item" style="height: 130px">
+                <div class="list-group" th:each="recruit:${recruitPage.getContent()}">
+                    <a href="#" class="list-group-item" style="height: 130px" th:href="@{/zhaopin/detail(recruitId=${recruit.recruitId})}">
                         <div style="margin-top: 0;padding: 0;">
                             <div style="width: 40%;float: left;">
                                 <!--recruitTitle-->
                                 <h4 style="font-size: 20px;color: #000;" th:text="${recruit.recruitTitle}"></h4>
                                 <!--lowSalary-highSalary-->
-                                <span style="font-size: 20px;color: #ff7900;" th:if="!${recruit.salary}" th:text="不限"></span>
-                                <span style="font-size: 20px;color: #ff7900;" th:if="${recruit.salary}" th:text="${recruit.salary}"></span>
+                                <span style="font-size: 20px;color: #ff7900;" th:if="!${recruit.salary}"
+                                      th:text="面议"></span>
+                                <span th:if="${recruit.salary}">
+                                    <span style="font-size: 20px;color: #ff7900;" th:text="${recruit.salary}"></span>
+                                    <span>元/月</span>
+                                </span>
                             </div>
                             <div style="position: relative;top: 15px;">
                                 <!--enterpriseName-->
                                 <h5 style="color: #000;" th:text="${recruit.enterpriseName}"></h5>
                                 <div>
                                     <!--address-->
-                                    <span style="border-right: 2px solid #999999;padding-right: 5px" th:text="${recruit.address}"></span>
-                                    <span style="border-right: 2px solid #999999;padding-right: 5px" th:text="${recruit.education}"></span>
+                                    <span style="border-right: 2px solid #999999;padding-right: 5px"
+                                          th:text="${recruit.address}"></span>
+                                    <span style="border-right: 2px solid #999999;padding-right: 5px"
+                                          th:text="${recruit.education}"></span>
                                     <span th:if="!${recruit.experience}">不限</span>
                                     <span th:if="${recruit.experience}" th:text="${recruit.experience}"></span>
                                 </div>
@@ -66,8 +74,30 @@
                         </div>
                     </a>
                 </div>
+            </div>
+            <div class="col-md-12 column">
+                <ul class="pagination pull-right">
+                    <li th:class="${current<=0}?'disabled':''">
+                        <a th:if="${not recruitPage.isFirst()}"
+                           th:href="@{/zhaopin/list(page=${recruitPage.number - 1},size=${size})}">上一页</a>
+                        <a th:if="${recruitPage.isFirst()}" href="javascript:void(0);">上一页</a>
+                    </li>
+                    <li th:each="page:${#numbers.sequence(0,recruitPage.getTotalPages()-1)}"
+                        th:class="${page==recruitPage.number}?'disabled':''">
+                        <a th:if="${page!=recruitPage.number}" th:href="@{/zhaopin/list(page=${page},size=${size})}">
+                            <span th:text="${page+1}"></span>
+                        </a>
+                        <a th:if="${page==recruitPage.number}" href="javascript:void(0);">
+                            <span th:text="${page+1}"></span>
+                        </a>
+                    </li>
 
-                <!--</div>-->
+                    <li th:class="${current>=recruitPage.getTotalPages()-1}?'disabled':''">
+                        <a th:if="${not recruitPage.last}"
+                           th:href="@{/zhaopin/list(page=${recruitPage.number + 1},size=${size})}">下一页</a>
+                        <a th:if="${recruitPage.last}" href="javascript:void(0);">下一页</a>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

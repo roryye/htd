@@ -26,4 +26,10 @@ class RecruitRepositoryTest {
         }
         assertEquals(1, recruitList.size());
     }
+
+    @Test
+    void findByRecruitId() {
+        Recruit recruit = recruitRepository.findByRecruitId(1);
+        System.out.println(recruit);
+    }
 }

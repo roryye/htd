@@ -4,7 +4,6 @@ import cn.bunz.htd.entity.Recruit;
 import cn.bunz.htd.service.RecruitService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
@@ -33,7 +32,7 @@ public class PositionController {
     public String detail(@RequestParam(value = "recruitId") Integer recruitId, Model model){
         Recruit recruit = recruitService.findByRecruitId(recruitId);
         model.addAttribute("recruit", recruit);
-        return "/detail";
+        return "detail";
     }
 
 /*

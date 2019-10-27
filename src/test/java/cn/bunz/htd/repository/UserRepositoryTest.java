@@ -27,4 +27,10 @@ class UserRepositoryTest {
         }
         assertEquals(1, userList.size());
     }
+
+    @Test
+    void existsByUserNameAndUserPassword() {
+        String password = userRepository.findUserPasswordByUserName("1");
+        assertEquals('1', password);
+    }
 }

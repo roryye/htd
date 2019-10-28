@@ -52,7 +52,8 @@ $(function(){
             },
             success: function(data){
                 console.log(data)
-                $('.recruitlist').html(data)
+                $('.recruitlist').remove()
+                $('#data').html(data)
             }
 
         })

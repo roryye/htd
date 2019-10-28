@@ -10,3 +10,16 @@
     background-color: #3b99fc;
     top: -20px;
 }
+
+.moneytitle{
+    font-size: 14px;
+    color: #666;
+}
+
+.moneyitem{
+    margin-left: 15px;
+}
+
+.moneyitem a{
+   color: #000;
+}

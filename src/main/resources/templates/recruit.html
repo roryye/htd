@@ -7,11 +7,28 @@
     <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
     <script src="https://cdn.bootcss.com/twitter-bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <link rel="stylesheet" th:href="@{/css/recruit.css}">
+    <script th:src="@{/js/recruit.js}"></script>
 </head>
 <body>
 <div class="container">
     <div class="row clearfix">
         <div class="col-md-12 column">
+            <div class="panel panel-primary" style="margin-bottom: 10px;padding: 20px;">
+                <div class="money">
+                    <span class="moneytitle">
+                        每月薪资：
+<!--                        <span class="moneyitem"><a th:href="@{/zhaopin/detail(recruitId=${recruit.recruitId})}">不限</a></span>-->
+                        <span class="moneyitem"><a href="#">不限</a></span>
+                        <span class="moneyitem"><a href="#">面议</a></span>
+                        <span class="moneyitem"><a href="#">2000以下</a></span>
+                        <span class="moneyitem"><a href="#">2001-3000</a></span>
+                        <span class="moneyitem"><a href="#">3001-5000</a></span>
+                        <span class="moneyitem"><a href="#">5001-8000</a></span>
+                        <span class="moneyitem"><a href="#">8001-10000</a></span>
+                        <span class="moneyitem"><a href="#">10000以上</a></span>
+                    </span>
+                </div>
+            </div>
             <div class="panel panel-primary">
                 <!--<div class="list-group">-->
                     <!--<a href="#" class="list-group-item" style="height: 130px">-->
@@ -38,20 +55,17 @@
                         <!--</div>-->
                     <!--</a>-->
                 <!--</div>-->
-                <div class="page-head">
-                    <p>6666666666</p>
-                </div>
-                <div class="list-group" th:each="recruit:${recruitPage.getContent()}">
+                <div class="list-group recruitlist" th:fragment="recruitlist" th:each="recruit:${recruitPage.getContent()}">
                     <a href="#" class="list-group-item" style="height: 130px" th:href="@{/zhaopin/detail(recruitId=${recruit.recruitId})}">
                         <div style="margin-top: 0;padding: 0;">
                             <div style="width: 40%;float: left;">
                                 <!--recruitTitle-->
                                 <h4 style="font-size: 20px;color: #000;" th:text="${recruit.recruitTitle}"></h4>
                                 <!--lowSalary-highSalary-->
-                                <span style="font-size: 20px;color: #ff7900;" th:if="!${recruit.salary}"
+                                <span style="font-size: 20px;color: #ff7900;" th:if="!${recruit.lowSalary}"
                                       th:text="面议"></span>
-                                <span th:if="${recruit.salary}">
-                                    <span style="font-size: 20px;color: #ff7900;" th:text="${recruit.salary}"></span>
+                                <span th:if="${recruit.lowSalary}">
+                                    <span style="font-size: 20px;color: #ff7900;" th:text="${recruit.lowSalary}+'-'+${recruit.highSalary}"></span>
                                     <span>元/月</span>
                                 </span>
                             </div>
@@ -74,31 +88,32 @@
                         </div>
                     </a>
                 </div>
-            </div>
-            <div class="col-md-12 column">
-                <ul class="pagination pull-right">
-                    <li th:class="${current<=0}?'disabled':''">
-                        <a th:if="${not recruitPage.isFirst()}"
-                           th:href="@{/zhaopin/list(page=${recruitPage.number - 1},size=${size})}">上一页</a>
-                        <a th:if="${recruitPage.isFirst()}" href="javascript:void(0);">上一页</a>
-                    </li>
-                    <li th:each="page:${#numbers.sequence(0,recruitPage.getTotalPages()-1)}"
-                        th:class="${page==recruitPage.number}?'disabled':''">
-                        <a th:if="${page!=recruitPage.number}" th:href="@{/zhaopin/list(page=${page},size=${size})}">
-                            <span th:text="${page+1}"></span>
-                        </a>
-                        <a th:if="${page==recruitPage.number}" href="javascript:void(0);">
-                            <span th:text="${page+1}"></span>
-                        </a>
-                    </li>
+                <div class="col-md-12 column">
+                    <ul class="pagination pull-right">
+                        <li th:class="${current<=0}?'disabled':''">
+                            <a th:if="${not recruitPage.isFirst()}"
+                               th:href="@{/zhaopin/list(page=${recruitPage.number - 1},size=${size})}">上一页</a>
+                            <a th:if="${recruitPage.isFirst()}" href="javascript:void(0);">上一页</a>
+                        </li>
+                        <li th:each="page:${#numbers.sequence(0,recruitPage.getTotalPages()-1)}"
+                            th:class="${page==recruitPage.number}?'disabled':''">
+                            <a th:if="${page!=recruitPage.number}" th:href="@{/zhaopin/list(page=${page},size=${size})}">
+                                <span th:text="${page+1}"></span>
+                            </a>
+                            <a th:if="${page==recruitPage.number}" href="javascript:void(0);">
+                                <span th:text="${page+1}"></span>
+                            </a>
+                        </li>
 
-                    <li th:class="${current>=recruitPage.getTotalPages()-1}?'disabled':''">
-                        <a th:if="${not recruitPage.last}"
-                           th:href="@{/zhaopin/list(page=${recruitPage.number + 1},size=${size})}">下一页</a>
-                        <a th:if="${recruitPage.last}" href="javascript:void(0);">下一页</a>
-                    </li>
-                </ul>
+                        <li th:class="${current>=recruitPage.getTotalPages()-1}?'disabled':''">
+                            <a th:if="${not recruitPage.last}"
+                               th:href="@{/zhaopin/list(page=${recruitPage.number + 1},size=${size})}">下一页</a>
+                            <a th:if="${recruitPage.last}" href="javascript:void(0);">下一页</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
+
         </div>
     </div>
 </div>

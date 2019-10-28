@@ -43,7 +43,9 @@ public class Recruit {
 
     private String gender;
 
-    private String salary;
+    private Integer lowSalary;
+
+    private Integer highSalary;
 
     private String jobDesc;
 

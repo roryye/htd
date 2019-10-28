@@ -9,4 +9,6 @@ public interface RecruitService {
     Page<Recruit> findAll(Pageable pageable);
 
     Recruit findByRecruitId(Integer recruitId);
+
+    Page<Recruit> findBySalary(Pageable pageable, Integer lowSalary, Integer highSalary);
 }

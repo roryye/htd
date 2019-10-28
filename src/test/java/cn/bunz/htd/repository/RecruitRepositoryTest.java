@@ -24,7 +24,7 @@ class RecruitRepositoryTest {
         for (Recruit recruit : recruitList) {
             System.out.println(recruit);
         }
-        assertEquals(1, recruitList.size());
+        assertEquals(10, recruitList.size());
     }
 
     @Test

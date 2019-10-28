@@ -35,6 +35,19 @@ public class PositionController {
         return "detail";
     }
 
+    @GetMapping("/recruit")
+    public String recruit(@RequestParam(defaultValue = "1") String userId,
+                          @PageableDefault(size = 6) Pageable pageable, Model model,
+                          @RequestParam(defaultValue = "0") Integer lowSalary,
+                          @RequestParam(defaultValue = "0") Integer highSalary){
+
+        Page<Recruit> recruitPage = recruitService.findBySalary(pageable, lowSalary, highSalary);
+        model.addAttribute("recruitPage", recruitPage);
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("size", pageable.getPageSize());
+        return "recruit::recruitlist";
+    }
+
 /*
 @GetMapping("/listrecruit")
 @ResponseBody

@@ -29,4 +29,19 @@ public class RecruitServiceImpl implements RecruitService {
     public Page<Recruit> findBySalary(Pageable pageable, Integer lowSalary, Integer highSalary) {
         return recruitRepository.findBySalary(pageable, lowSalary, highSalary);
     }
+
+    @Override
+    public Page<Recruit> findByEducation(Pageable pageable, String education) {
+        return recruitRepository.findByEducation(pageable, education);
+    }
+
+    @Override
+    public Page<Recruit> findByExperience(Pageable pageable, String experience) {
+        return recruitRepository.findByExperience(pageable, experience);
+    }
+
+    @Override
+    public Page<Recruit> findBySearchText(Pageable pageable, String searchText) {
+        return recruitRepository.findBySearchText(pageable, searchText);
+    }
 }

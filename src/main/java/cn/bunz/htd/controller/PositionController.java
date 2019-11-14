@@ -29,7 +29,7 @@ public class PositionController {
     }
 
     @GetMapping("/detail")
-    public String detail(@RequestParam(value = "recruitId") Integer recruitId, Model model){
+    public String detail(@RequestParam(value = "recruitId") Integer recruitId, Model model) {
         Recruit recruit = recruitService.findByRecruitId(recruitId);
         model.addAttribute("recruit", recruit);
         return "detail";
@@ -39,7 +39,7 @@ public class PositionController {
     public String recruit(@RequestParam(defaultValue = "1") String userId,
                           @PageableDefault(size = 6) Pageable pageable, Model model,
                           @RequestParam(defaultValue = "0") Integer lowSalary,
-                          @RequestParam(defaultValue = "0") Integer highSalary){
+                          @RequestParam(defaultValue = "0") Integer highSalary) {
 
         Page<Recruit> recruitPage = recruitService.findBySalary(pageable, lowSalary, highSalary);
         model.addAttribute("recruitPage", recruitPage);
@@ -47,6 +47,62 @@ public class PositionController {
         model.addAttribute("size", pageable.getPageSize());
         return "recruit::recruitlist";
     }
+
+    @GetMapping("/education")
+    public String Education(@RequestParam(defaultValue = "1") String userId,
+                            @PageableDefault(size = 6) Pageable pageable, Model model,
+                            @RequestParam(defaultValue = "不限") String education) {
+
+        Page<Recruit> recruitPage;
+        if (education.indexOf("不限") != -1) {
+            recruitPage = recruitService.findAll(pageable);
+        } else {
+            recruitPage = recruitService.findByEducation(pageable, education);
+        }
+        model.addAttribute("recruitPage", recruitPage);
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("size", pageable.getPageSize());
+
+        return "recruit::recruitlist";
+    }
+
+    @GetMapping("/experience")
+    public String Experience(@RequestParam(defaultValue = "1") String userId,
+                             @PageableDefault(size = 6) Pageable pageable, Model model,
+                             @RequestParam(defaultValue = "不限") String experience) {
+
+        Page<Recruit> recruitPage;
+        if (experience.indexOf("不限") != -1) {
+            recruitPage = recruitService.findAll(pageable);
+        } else {
+            recruitPage = recruitService.findByExperience(pageable, experience);
+        }
+        model.addAttribute("recruitPage", recruitPage);
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("size", pageable.getPageSize());
+
+        return "recruit::recruitlist";
+    }
+
+    @GetMapping("/searchtext")
+    public String SearchText(@RequestParam(defaultValue = "1") String userId,
+                             @PageableDefault(size = 6) Pageable pageable, Model model,
+                             @RequestParam(defaultValue = "") String searchtext) {
+
+        Page<Recruit> recruitPage;
+        if (searchtext == null || "".equals(searchtext)) {
+            recruitPage = recruitService.findAll(pageable);
+        } else {
+            recruitPage = recruitService.findBySearchText(pageable, searchtext);
+        }
+        model.addAttribute("recruitPage", recruitPage);
+        model.addAttribute("current", pageable.getPageNumber());
+        model.addAttribute("size", pageable.getPageSize());
+
+        return "recruit::recruitlist";
+    }
+
+
 
 /*
 @GetMapping("/listrecruit")
